@@ -286,9 +286,13 @@
     position:relative;
   }
 
+  /* ---------- CONSTANT WINDOW SIZE ----------
+     Every section window now shares one fixed size so the
+     window never changes shape when switching tabs. */
   .window{
-    width:100%;
-    max-width:600px;
+    width:820px;
+    height:560px;
+    max-width:92vw;
     max-height:100%;
     border-radius:0 15px 15px 15px;
     background:var(--parchment-100);
@@ -322,7 +326,7 @@
   .dot.stone{background:#B7AC94; box-shadow:inset 0 -1px 2px rgba(0,0,0,0.3);}
   .window-title{ font-family:var(--font-mono); font-size:12px; color:var(--parchment-200); margin-left:4px; letter-spacing:0.3px; }
 
-  .window-body{ padding:24px 26px 26px; color:var(--ink-900); overflow-y:auto; }
+  .window-body{ flex:1; padding:24px 26px 26px; color:var(--ink-900); overflow-y:auto; }
 
   /* empty state */
   .empty-state{
@@ -340,7 +344,6 @@
   .empty-state .msg{ font-family:var(--font-mono); font-size:13px; color:var(--sage-400); }
 
   /* ---- About window ---- */
-  .win-about{ max-width:560px; }
   .about-top{ display:flex; gap:20px; align-items:center; margin-bottom:18px; }
   .avatar{
     width:74px;height:74px; border-radius:50%; flex-shrink:0;
@@ -370,8 +373,6 @@
   @media (prefers-reduced-motion: reduce){ .pulse-dot{animation:none;} }
 
   /* ---- Experience — separate cards, sorted by timeline ---- */
-  .win-experience{ max-width:640px; }
-  .win-experience .window-body{ max-height:min(560px, 60vh); }
   .exp-list{ display:flex; flex-direction:column; gap:12px; }
   .exp-card{
     position:relative;
@@ -389,7 +390,6 @@
   .role-bullets li:last-child{ margin-bottom:0; }
 
   /* ---- Education ---- */
-  .win-education{ max-width:480px; }
   .edu-card{ padding:16px 18px; border-radius:12px; background:var(--parchment-200); border:1px solid rgba(74,56,38,0.12); }
   .edu-school{ font-family:var(--font-display); font-weight:600; font-size:17px; }
   .edu-degree{ font-size:13.5px; color:var(--ink-700); margin-top:4px; }
@@ -405,8 +405,6 @@
   .course-chip .course-code{ font-family:var(--font-mono); font-size:11px; font-weight:600; color:var(--moss-600); }
 
   /* ---- Skills — separate boxes per category ---- */
-  .win-skills{ max-width:560px; }
-  .win-skills .window-body{ max-height:min(500px, 60vh); }
   .skill-list{ display:flex; flex-direction:column; gap:12px; }
   .skill-card{
     padding:14px 16px;
@@ -420,8 +418,6 @@
   .chip{ font-size:12.5px; padding:5px 11px; border-radius:999px; background:var(--parchment-100); border:1px solid rgba(75,107,69,0.25); color:var(--ink-700); }
 
   /* ---- Projects ---- */
-  .win-projects{ max-width:480px; }
-  .win-projects .window-body{ max-height:min(560px, 60vh); }
   .proj-list{ display:flex; flex-direction:column; gap:12px; }
   .proj-card{ padding:16px 18px; border-radius:11px; background:var(--parchment-200); border:1px solid rgba(74,56,38,0.12); }
   .proj-title{ font-family:var(--font-display); font-weight:600; font-size:16px; margin-bottom:4px; }
@@ -432,7 +428,6 @@
   .tag{ font-family:var(--font-mono); font-size:10.5px; padding:3px 8px; border-radius:999px; background:rgba(75,107,69,0.14); color:var(--moss-600); border:1px solid rgba(75,107,69,0.2); }
 
   /* ---- Contact ---- */
-  .win-contact{ max-width:420px; }
   .contact-row{ display:flex; align-items:center; gap:12px; padding:11px 0; border-bottom:1px solid rgba(74,56,38,0.12); font-size:13.5px; }
   .contact-row:last-child{ border-bottom:none; }
   .contact-icon{ width:32px;height:32px; border-radius:9px; background:var(--parchment-200); display:flex;align-items:center;justify-content:center; flex-shrink:0; font-size:15px; }
@@ -441,7 +436,7 @@
   .contact-label{ font-family:var(--font-mono); font-size:10.5px; color:var(--sage-500); display:block; margin-bottom:2px; }
 
   /* ---- Resume ---- */
-  .win-resume{ max-width:380px; text-align:center; }
+  .win-resume .window-body{ display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; }
   .resume-icon{ font-size:40px; margin-bottom:10px; }
   .resume-btn{
     display:inline-block; margin-top:14px; padding:10px 20px; border-radius:999px;
@@ -490,7 +485,7 @@
 
   @media (max-width: 900px){
     .sidebar{ display:none; }
-    .window{ max-width:94vw; }
+    .window{ width:94vw; height:80vh; }
   }
 </style>
 </head>
