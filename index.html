@@ -3,230 +3,856 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Saksham Sharma: Data Engineer</title>
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<title>Saksham Sharma — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --forest-950:#122318;
+    --forest-900:#16301F;
+    --forest-800:#1F3D2A;
+    --forest-700:#2A4D35;
+    --moss-600:#4B6B45;
+    --moss-500:#647F52;
+    --bark-800:#4A3826;
+    --bark-700:#5A4632;
+    --bark-600:#6E543A;
+    --bark-500:#8A6A47;
+    --parchment-100:#F7F1E1;
+    --parchment-200:#EFE6CE;
+    --parchment-300:#E4D8B8;
+    --ink-900:#26231C;
+    --ink-700:#433D30;
+    --amber-500:#C08A2E;
+    --amber-400:#D6A544;
+    --sage-500:#8A9C7E;
+    --sage-400:#9FAF95;
+
+    --font-display:'Fraunces', serif;
+    --font-body:'Inter', sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0;
+    padding:0;
+    height:100%;
+    overflow:hidden;
+    font-family:var(--font-body);
+    color:var(--ink-900);
+    background:var(--forest-950);
+  }
+
+  .desktop{
+    position:relative;
+    width:100vw;
+    height:100vh;
+    background:
+      radial-gradient(ellipse 60% 45% at 18% 8%, rgba(214,165,68,0.16), transparent 60%),
+      radial-gradient(ellipse 70% 60% at 85% 100%, rgba(75,107,69,0.35), transparent 65%),
+      linear-gradient(160deg, var(--forest-900) 0%, var(--forest-800) 45%, var(--forest-700) 100%);
+    overflow:hidden;
+  }
+
+  .desktop::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+      radial-gradient(circle at 10% 20%, rgba(255,255,255,0.035) 0, transparent 3%),
+      radial-gradient(circle at 30% 70%, rgba(255,255,255,0.03) 0, transparent 2.5%),
+      radial-gradient(circle at 60% 15%, rgba(255,255,255,0.03) 0, transparent 2%),
+      radial-gradient(circle at 80% 55%, rgba(255,255,255,0.035) 0, transparent 3%),
+      radial-gradient(circle at 45% 85%, rgba(255,255,255,0.03) 0, transparent 2.5%);
+    pointer-events:none;
+  }
+
+  .leaf{
+    position:absolute;
+    top:-40px;
+    font-size:18px;
+    opacity:0.55;
+    color:var(--amber-400);
+    pointer-events:none;
+    animation:fall linear infinite;
+    will-change:transform;
+  }
+  @keyframes fall{
+    0%{transform:translateY(-5vh) translateX(0) rotate(0deg);opacity:0;}
+    8%{opacity:0.5;}
+    92%{opacity:0.45;}
+    100%{transform:translateY(105vh) translateX(40px) rotate(340deg);opacity:0;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .leaf{animation:none;display:none;}
+  }
+
+  .topbar{
+    position:relative;
+    z-index:20;
+    height:44px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 18px;
+    background:rgba(18,35,24,0.55);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(255,255,255,0.06);
+  }
+  .topbar-left{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-family:var(--font-display);
+    font-style:italic;
+    font-weight:600;
+    font-size:16px;
+    color:var(--parchment-100);
+    letter-spacing:0.2px;
+  }
+  .topbar-left svg{flex-shrink:0;}
+  .topbar-right{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--sage-400);
+  }
+  .topbar-icon{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:26px;height:26px;
+    border-radius:7px;
+    color:var(--parchment-200);
+    opacity:0.85;
+    cursor:pointer;
+    transition:background .15s ease;
+  }
+  .topbar-icon:hover{background:rgba(255,255,255,0.08);}
+
+  .layout{
+    position:relative;
+    z-index:5;
+    display:flex;
+    height:calc(100vh - 44px);
+  }
+
+  .sidebar{
+    width:216px;
+    flex-shrink:0;
+    margin:16px 0 16px 16px;
+    padding:18px 14px;
+    border-radius:16px;
+    background:
+      linear-gradient(180deg, rgba(90,70,50,0.55), rgba(74,56,38,0.55));
+    border:1px solid rgba(214,165,68,0.14);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 12px 30px rgba(0,0,0,0.25);
+    backdrop-filter:blur(6px);
+    height:fit-content;
+  }
+  .sidebar-title{
+    font-family:var(--font-mono);
+    font-size:11px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--amber-400);
+    margin:2px 0 14px 4px;
+  }
+  .trail{
+    list-style:none;
+    margin:0;padding:0;
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+  }
+  .trail-item{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:8px 10px;
+    border-radius:9px;
+    font-size:13.5px;
+    color:var(--parchment-200);
+    cursor:pointer;
+    transition:background .15s ease, color .15s ease, transform .15s ease;
+    position:relative;
+  }
+  .trail-item .leaf-bullet{ width:14px;height:14px; flex-shrink:0; opacity:0.8; }
+  .trail-item:hover{ background:rgba(255,255,255,0.06); transform:translateX(2px); }
+  .trail-item.active{
+    background:linear-gradient(90deg, rgba(214,165,68,0.22), rgba(214,165,68,0.05));
+    color:var(--parchment-100);
+    font-weight:600;
+  }
+  .trail-item.active::before{
+    content:"";
+    position:absolute;
+    left:-14px; top:50%; transform:translateY(-50%);
+    width:3px;height:16px;
+    border-radius:3px;
+    background:var(--amber-400);
+  }
+  .trail-item.active .leaf-bullet path{ fill:#D6A544 !important; }
+  .sidebar-divider{ height:1px; background:rgba(255,255,255,0.08); margin:14px 2px; }
+
+  /* ---------- WINDOWS STAGE ---------- */
+  .windows-area{
+    position:relative;
+    flex:1;
+    padding:16px 16px 0;
+    display:flex;
+    flex-direction:column;
+    min-width:0;
+  }
+
+  /* leaf tab strip */
+  .tab-strip{
+    display:flex;
+    align-items:flex-end;
+    gap:6px;
+    padding:0 8px;
+    flex-wrap:wrap;
+    row-gap:8px;
+    min-height:40px;
+  }
+  .tab{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    width:150px;
+    flex:0 0 150px;
+    padding:8px 10px 8px 12px;
+    border-radius:12px 12px 0 0;
+    background:rgba(247,241,225,0.12);
+    color:var(--parchment-200);
+    font-size:12.5px;
+    font-weight:500;
+    cursor:pointer;
+    transition:background .15s ease, color .15s ease;
+    white-space:nowrap;
+    position:relative;
+    border:1px solid transparent;
+    border-bottom:none;
+  }
+  .tab:hover{ background:rgba(247,241,225,0.2); }
+  .tab .tab-leaf{ width:12px; height:12px; flex-shrink:0; opacity:0.8; }
+  .tab span{
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    flex:1;
+    min-width:0;
+  }
+  .tab.active{
+    background:var(--parchment-100);
+    color:var(--ink-900);
+    font-weight:600;
+    border-color:rgba(74,56,38,0.2);
+  }
+  .tab.active .tab-leaf path{ fill:var(--amber-500) !important; }
+  .tab-close{
+    display:flex; align-items:center; justify-content:center;
+    width:16px;height:16px;
+    min-width:16px;
+    border-radius:50%;
+    font-size:11px;
+    line-height:1;
+    color:inherit;
+    opacity:0.55;
+    transition:opacity .15s ease, background .15s ease;
+    flex-shrink:0;
+    margin-left:auto;
+  }
+  .tab-close:hover{ opacity:1; background:rgba(0,0,0,0.12); }
+
+  /* branch line connecting tabs to stage, like a twig */
+  .tab-branch{
+    height:2px;
+    background:linear-gradient(90deg, transparent, var(--bark-500) 8%, var(--bark-500) 92%, transparent);
+    margin:0 8px;
+    opacity:0.5;
+  }
+
+  .stage{
+    flex:1;
+    display:flex;
+    align-items:flex-start;
+    justify-content:center;
+    padding:22px 8px 22px;
+    overflow:hidden;
+    position:relative;
+  }
+
+  .window{
+    width:100%;
+    max-width:600px;
+    max-height:100%;
+    border-radius:0 15px 15px 15px;
+    background:var(--parchment-100);
+    box-shadow:
+      0 2px 0 rgba(255,255,255,0.4) inset,
+      0 30px 60px rgba(10,20,12,0.45),
+      0 3px 10px rgba(10,20,12,0.25);
+    border:1px solid rgba(74,56,38,0.25);
+    overflow:hidden;
+    display:none;
+    flex-direction:column;
+    opacity:0;
+    transform:translateY(8px);
+    transition:opacity .18s ease, transform .18s ease;
+  }
+  .window.open{ display:flex; }
+  .window.show{ opacity:1; transform:translateY(0); }
+
+  .window-header{
+    height:38px;
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:0 14px;
+    background:linear-gradient(180deg, var(--bark-600), var(--bark-700));
+  }
+  .dot{width:11px;height:11px;border-radius:50%;flex-shrink:0;}
+  .dot.acorn{background:#8A6A47; box-shadow:inset 0 -1px 2px rgba(0,0,0,0.3);}
+  .dot.leaf{background:#7A9A5E; box-shadow:inset 0 -1px 2px rgba(0,0,0,0.3);}
+  .dot.stone{background:#B7AC94; box-shadow:inset 0 -1px 2px rgba(0,0,0,0.3);}
+  .window-title{ font-family:var(--font-mono); font-size:12px; color:var(--parchment-200); margin-left:4px; letter-spacing:0.3px; }
+
+  .window-body{ padding:24px 26px 26px; color:var(--ink-900); overflow-y:auto; }
+
+  /* empty state */
+  .empty-state{
+    display:none;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    color:var(--parchment-200);
+    text-align:center;
+    padding-top:60px;
+  }
+  .empty-state.show{ display:flex; }
+  .empty-state .big-leaf{ font-size:34px; opacity:0.7; }
+  .empty-state .msg{ font-family:var(--font-mono); font-size:13px; color:var(--sage-400); }
+
+  /* ---- About window ---- */
+  .win-about{ max-width:560px; }
+  .about-top{ display:flex; gap:20px; align-items:center; margin-bottom:18px; }
+  .avatar{
+    width:74px;height:74px; border-radius:50%; flex-shrink:0;
+    background: conic-gradient(from 200deg, var(--bark-500), var(--moss-600), var(--amber-500), var(--bark-500));
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--font-display); font-weight:600; font-size:26px; color:var(--parchment-100);
+    border:3px solid var(--parchment-100); box-shadow:0 6px 16px rgba(74,56,38,0.35);
+  }
+  .about-name{ font-family:var(--font-display); font-weight:600; font-size:26px; line-height:1.15; }
+  .about-role{ font-family:var(--font-mono); font-size:12.5px; color:var(--moss-600); margin-top:6px; }
+  .about-role .divider-dot{ color:var(--sage-500); margin:0 6px; }
+  .about-bio{ font-size:14.5px; line-height:1.7; color:var(--ink-700); margin-bottom:18px; }
+  .growing-tag{
+    display:inline-flex; align-items:center; gap:8px; padding:8px 14px; border-radius:999px;
+    background:var(--parchment-200); border:1px solid rgba(74,56,38,0.15);
+    font-family:var(--font-mono); font-size:12px; color:var(--ink-700);
+  }
+  .growing-tag .pulse-dot{
+    width:7px;height:7px;border-radius:50%;background:var(--moss-600);
+    box-shadow:0 0 0 0 rgba(75,107,69,0.6); animation:pulse 2.4s infinite;
+  }
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(75,107,69,0.45);}
+    70%{box-shadow:0 0 0 7px rgba(75,107,69,0);}
+    100%{box-shadow:0 0 0 0 rgba(75,107,69,0);}
+  }
+  @media (prefers-reduced-motion: reduce){ .pulse-dot{animation:none;} }
+
+  /* ---- Experience — separate cards, sorted by timeline ---- */
+  .win-experience{ max-width:640px; }
+  .win-experience .window-body{ max-height:min(560px, 60vh); }
+  .exp-list{ display:flex; flex-direction:column; gap:12px; }
+  .exp-card{
+    position:relative;
+    padding:16px 18px 16px 20px;
+    border-radius:12px;
+    background:var(--parchment-200);
+    border:1px solid rgba(74,56,38,0.12);
+    border-left:3px solid var(--amber-400);
+  }
+  .role-title{ font-family:var(--font-display); font-weight:600; font-size:15.5px; }
+  .role-org{ font-size:13px; color:var(--moss-600); font-weight:600; margin-top:2px; }
+  .role-dates{ font-family:var(--font-mono); font-size:11px; color:var(--sage-500); margin-top:2px; margin-bottom:10px; }
+  .role-bullets{ margin:0; padding-left:18px; font-size:13px; line-height:1.6; color:var(--ink-700); }
+  .role-bullets li{ margin-bottom:4px; }
+  .role-bullets li:last-child{ margin-bottom:0; }
+
+  /* ---- Education ---- */
+  .win-education{ max-width:480px; }
+  .edu-card{ padding:16px 18px; border-radius:12px; background:var(--parchment-200); border:1px solid rgba(74,56,38,0.12); }
+  .edu-school{ font-family:var(--font-display); font-weight:600; font-size:17px; }
+  .edu-degree{ font-size:13.5px; color:var(--ink-700); margin-top:4px; }
+  .edu-meta{ font-family:var(--font-mono); font-size:11.5px; color:var(--moss-600); margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; }
+  .coursework{ margin-top:16px; }
+  .coursework-title{ font-family:var(--font-mono); font-size:11px; letter-spacing:1px; text-transform:uppercase; color:var(--amber-500); margin-bottom:8px; }
+  .course-chips{ display:flex; flex-wrap:wrap; gap:7px; }
+  .course-chip{
+    display:flex; flex-direction:column; gap:1px;
+    font-size:12px; padding:7px 12px; border-radius:10px;
+    background:var(--parchment-200); border:1px solid rgba(75,107,69,0.25); color:var(--ink-700);
+  }
+  .course-chip .course-code{ font-family:var(--font-mono); font-size:11px; font-weight:600; color:var(--moss-600); }
+
+  /* ---- Skills — separate boxes per category ---- */
+  .win-skills{ max-width:560px; }
+  .win-skills .window-body{ max-height:min(500px, 60vh); }
+  .skill-list{ display:flex; flex-direction:column; gap:12px; }
+  .skill-card{
+    padding:14px 16px;
+    border-radius:12px;
+    background:var(--parchment-200);
+    border:1px solid rgba(74,56,38,0.12);
+    border-left:3px solid var(--moss-600);
+  }
+  .skill-group-title{ font-family:var(--font-mono); font-size:11px; letter-spacing:1px; text-transform:uppercase; color:var(--amber-500); margin-bottom:9px; }
+  .skill-chips{ display:flex; flex-wrap:wrap; gap:7px; }
+  .chip{ font-size:12.5px; padding:5px 11px; border-radius:999px; background:var(--parchment-100); border:1px solid rgba(75,107,69,0.25); color:var(--ink-700); }
+
+  /* ---- Projects ---- */
+  .win-projects{ max-width:480px; }
+  .win-projects .window-body{ max-height:min(560px, 60vh); }
+  .proj-list{ display:flex; flex-direction:column; gap:12px; }
+  .proj-card{ padding:16px 18px; border-radius:11px; background:var(--parchment-200); border:1px solid rgba(74,56,38,0.12); }
+  .proj-title{ font-family:var(--font-display); font-weight:600; font-size:16px; margin-bottom:4px; }
+  .proj-date{ font-family:var(--font-mono); font-size:11px; color:var(--sage-500); margin-bottom:8px; }
+  .proj-bullets{ margin:0 0 10px; padding-left:18px; font-size:13px; line-height:1.6; color:var(--ink-700); }
+  .proj-bullets li{ margin-bottom:4px; }
+  .proj-tags{ display:flex; flex-wrap:wrap; gap:6px; }
+  .tag{ font-family:var(--font-mono); font-size:10.5px; padding:3px 8px; border-radius:999px; background:rgba(75,107,69,0.14); color:var(--moss-600); border:1px solid rgba(75,107,69,0.2); }
+
+  /* ---- Contact ---- */
+  .win-contact{ max-width:420px; }
+  .contact-row{ display:flex; align-items:center; gap:12px; padding:11px 0; border-bottom:1px solid rgba(74,56,38,0.12); font-size:13.5px; }
+  .contact-row:last-child{ border-bottom:none; }
+  .contact-icon{ width:32px;height:32px; border-radius:9px; background:var(--parchment-200); display:flex;align-items:center;justify-content:center; flex-shrink:0; font-size:15px; }
+  .contact-row a{ color:var(--ink-900); text-decoration:none; font-weight:600; }
+  .contact-row a:hover{ color:var(--moss-600); }
+  .contact-label{ font-family:var(--font-mono); font-size:10.5px; color:var(--sage-500); display:block; margin-bottom:2px; }
+
+  /* ---- Resume ---- */
+  .win-resume{ max-width:380px; text-align:center; }
+  .resume-icon{ font-size:40px; margin-bottom:10px; }
+  .resume-btn{
+    display:inline-block; margin-top:14px; padding:10px 20px; border-radius:999px;
+    background:var(--forest-800); color:var(--parchment-100); font-family:var(--font-mono); font-size:12.5px;
+    text-decoration:none; transition:background .15s ease;
+  }
+  .resume-btn:hover{ background:var(--moss-600); }
+  .resume-note{ font-size:12px; color:var(--sage-500); margin-top:10px; }
+
+  /* ---------- DOCK ---------- */
+  .dock-wrap{
+    position:absolute; bottom:14px; left:50%; transform:translateX(-50%); z-index:30;
+    display:flex; align-items:flex-end; padding:10px 22px 12px; border-radius:26px;
+    background: linear-gradient(180deg, var(--bark-600) 0%, var(--bark-800) 100%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 16px 34px rgba(0,0,0,0.4);
+    border:1px solid rgba(0,0,0,0.25);
+  }
+  .dock-wrap::before{
+    content:""; position:absolute; inset:0; border-radius:26px;
+    background-image:
+      radial-gradient(ellipse 10px 6px at 15% 30%, rgba(0,0,0,0.18), transparent 70%),
+      radial-gradient(ellipse 14px 7px at 70% 70%, rgba(0,0,0,0.15), transparent 70%),
+      radial-gradient(ellipse 8px 5px at 45% 20%, rgba(0,0,0,0.12), transparent 70%);
+    pointer-events:none;
+  }
+  .dock-icon{
+    position:relative; width:46px;height:46px; margin:0 5px; border-radius:13px; background:var(--parchment-100);
+    display:flex;align-items:center;justify-content:center; font-size:20px; cursor:pointer;
+    transition:transform .12s ease-out, box-shadow .12s ease-out; box-shadow:0 4px 8px rgba(0,0,0,0.25);
+    transform-origin:bottom center;
+  }
+  .dock-icon:hover{ box-shadow:0 10px 18px rgba(0,0,0,0.3); }
+  .dock-icon .tooltip{
+    position:absolute; bottom:calc(100% + 10px); left:50%; transform:translateX(-50%);
+    background:var(--forest-950); color:var(--parchment-100); font-family:var(--font-mono); font-size:11px;
+    padding:5px 10px; border-radius:7px; white-space:nowrap; opacity:0; pointer-events:none; transition:opacity .12s ease;
+  }
+  .dock-icon:hover .tooltip{ opacity:1; }
+  .dock-icon.active-dot::after{
+    content:""; position:absolute; bottom:-7px; left:50%; transform:translateX(-50%);
+    width:4px;height:4px; border-radius:50%; background:var(--amber-400);
+  }
+
+  .window-body::-webkit-scrollbar{ width:6px; }
+  .window-body::-webkit-scrollbar-thumb{ background:rgba(74,56,38,0.25); border-radius:3px; }
+
+  @media (max-width: 900px){
+    .sidebar{ display:none; }
+    .window{ max-width:94vw; }
+  }
+</style>
 </head>
 <body>
 
-<nav>
-  <div class="nav-inner">
-    <div class="nav-logo">Saksham Sharma</div>
-    <div class="nav-links">
-      <a href="#work">Work</a>
-      <a href="#experience">Experience</a>
-      <a href="#education">Education</a>
-      <a href="#skills">Skills</a>
-      <a href="#contact">Contact</a>
+<div class="desktop" id="desktop">
+
+  <div class="topbar">
+    <div class="topbar-left">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2C7 2 4 6 4 10c0 5 4 9 8 12 4-3 8-7 8-12 0-4-3-8-8-8Z" fill="#D6A544" opacity="0.9"/><path d="M12 4v18" stroke="#4A3826" stroke-width="1" opacity="0.5"/></svg>
+      Saksham Sharma — Portfolio
     </div>
-  </div>
-</nav>
-
-<header>
-  <img src="assets/profile.jpg" alt="Saksham Sharma">
-  <div>
-    <h1>Saksham Sharma</h1>
-    <div class="role">Data Engineering · Stony Brook University</div>
-    <p class="intro">I build pipelines that turn messy, large-scale data, healthcare records, energy data, donor histories, into clean, reliable systems people can actually use.</p>
-    <div class="contact-line">
-      <a href="mailto:saksham.sharma@stonybrook.edu">saksham.sharma@stonybrook.edu</a>
-      <span>·</span>
-      <a href="https://linkedin.com/in/saksham-sharma275" target="_blank" rel="noopener">LinkedIn</a>
-      <span>·</span>
-      <a href="https://github.com/sakksham27" target="_blank" rel="noopener">GitHub</a>
-    </div>
-  </div>
-</header>
-
-<section id="work" class="alt">
-  <h2>Selected work</h2>
-
-  <div class="case">
-    <div class="metric-box"><div class="metric">3B+</div><div class="metric-label">rows ingested</div></div>
-    <div>
-      <div class="meta">Data Management & Biomedical Data Analytics Lab: May 2026 to Present</div>
-      <h3>EHR star-schema pipeline</h3>
-      <p>Engineered an ETL pipeline ingesting 3B+ rows of Cerner Health Facts EHR data into a 7-table, 250GB star-schema MySQL database, with bulk-load optimization and foreign-key integrity validation. Mapped ICD-9 to ICD-10 diagnosis codes across 268M records via a 78K-row crosswalk table, enabling standardized clinical analytics.</p>
+    <div class="topbar-right">
+      <div class="topbar-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></div>
+      <span id="clock">10:24 AM</span>
     </div>
   </div>
 
-  <div class="case">
-    <div class="metric-box"><div class="metric">95%</div><div class="metric-label">faster processing</div></div>
-    <div>
-      <div class="meta">Relevate Power: October 2025 to May 2026</div>
-      <h3>Hydropower data pipeline</h3>
-      <p>Collated and wrangled river flow and pricing history for 25 hydropower plants, cutting processing time by 95%. Built an Azure Data Factory ETL pipeline to store 10GB+ datasets for energy model training, and orchestrated Azure Functions with Power BI to deliver automated pricing reports that drove financial decisions.</p>
-    </div>
-  </div>
+  <div class="layout">
 
-  <div class="case">
-    <div class="metric-box"><div class="metric">100K+</div><div class="metric-label">donors scored</div></div>
-    <div>
-      <div class="meta">Stony Brook Foundation: August 2025 to May 2026</div>
-      <h3>Donor scoring & reporting dashboards</h3>
-      <p>Built an ELT pipeline scoring 100K+ donors on donation amount, frequency, and recency using multi-table joins and CTEs. Migrated performance reporting from Excel to Power BI, delivering automated dashboards to 100+ employees across 10 teams, and built dashboards to validate data integrity across ETL pipelines.</p>
-    </div>
-  </div>
-
-  <div class="case">
-    <div class="metric-box"><div class="metric">1M+</div><div class="metric-label">records processed</div></div>
-    <div>
-      <div class="meta">Personal project, June 2026 · Python, PostgreSQL, Google Gemini</div>
-      <h3>Natural language to SQL tool</h3>
-      <p>Built an end-to-end NL-to-SQL pipeline in Python, batch ingesting 1M+ weather records across 10 US cities into PostgreSQL. Engineered a schema extraction service that auto-generates a JSON data catalog from PostgreSQL's information schema to reduce LLM hallucination and improve SQL generation accuracy, and deployed a Flask web interface exposing the pipeline as a REST API.</p>
-    </div>
-  </div>
-
-</section>
-
-<section id="experience">
-  <h2>Experience</h2>
-
-  <div class="timeline-item">
-    <div class="timeline-content">
-      <div class="timeline-head">
-        <h3>Data Engineering Intern</h3>
-        <span class="timeline-date">May 2026 – Present</span>
-      </div>
-      <div class="timeline-org"><a href="https://www3.cs.stonybrook.edu/~fuswang/" target="_blank" rel="noopener">Data Management and Biomedical Data Analytics Lab</a></div>
-      <ul>
-        <li>Engineered ETL pipeline ingesting 3B+ rows of Cerner Health Facts EHR data into a star-schema MySQL database (7 tables, 250GB) with bulk-load optimization and FK integrity validation.</li>
-        <li>Implemented ICD-9 to ICD-10 diagnosis code mapping across 268M records via JOIN/UPDATE on a 78K-row crosswalk table, enabling standardized clinical analytics on large-scale healthcare data.</li>
+    <div class="sidebar">
+      <div class="sidebar-title">Trail Map</div>
+      <ul class="trail" id="navList">
+        <li class="trail-item active" data-win="about"><svg class="leaf-bullet" viewBox="0 0 24 24" fill="none"><path d="M12 2C7 2 4 6 4 10c0 5 4 9 8 12 4-3 8-7 8-12 0-4-3-8-8-8Z" fill="#D6A544"/></svg>About</li>
+        <li class="trail-item" data-win="experience"><svg class="leaf-bullet" viewBox="0 0 24 24" fill="none"><path d="M12 2C7 2 4 6 4 10c0 5 4 9 8 12 4-3 8-7 8-12 0-4-3-8-8-8Z" fill="#9FAF95"/></svg>Experience</li>
+        <li class="trail-item" data-win="education"><svg class="leaf-bullet" viewBox="0 0 24 24" fill="none"><path d="M12 2C7 2 4 6 4 10c0 5 4 9 8 12 4-3 8-7 8-12 0-4-3-8-8-8Z" fill="#9FAF95"/></svg>Education</li>
+        <li class="trail-item" data-win="skills"><svg class="leaf-bullet" viewBox="0 0 24 24" fill="none"><path d="M12 2C7 2 4 6 4 10c0 5 4 9 8 12 4-3 8-7 8-12 0-4-3-8-8-8Z" fill="#9FAF95"/></svg>Skills</li>
+        <li class="trail-item" data-win="projects"><svg class="leaf-bullet" viewBox="0 0 24 24" fill="none"><path d="M12 2C7 2 4 6 4 10c0 5 4 9 8 12 4-3 8-7 8-12 0-4-3-8-8-8Z" fill="#9FAF95"/></svg>Projects</li>
+        <li class="trail-item" data-win="contact"><svg class="leaf-bullet" viewBox="0 0 24 24" fill="none"><path d="M12 2C7 2 4 6 4 10c0 5 4 9 8 12 4-3 8-7 8-12 0-4-3-8-8-8Z" fill="#9FAF95"/></svg>Contact</li>
+      </ul>
+      <div class="sidebar-divider"></div>
+      <ul class="trail">
+        <li class="trail-item" data-win="resume"><svg class="leaf-bullet" viewBox="0 0 24 24" fill="none"><rect x="4" y="2" width="16" height="20" rx="2" fill="#9FAF95"/></svg>Resume</li>
       </ul>
     </div>
+
+    <div class="windows-area">
+      <div class="tab-strip" id="tabStrip"></div>
+      <div class="tab-branch"></div>
+
+      <div class="stage" id="stage">
+
+        <div class="empty-state" id="emptyState">
+          <div class="big-leaf">🍂</div>
+          <div class="msg">Pick a trail from the map to open a section</div>
+        </div>
+
+        <div class="window win-about" id="win-about">
+          <div class="window-header"><span class="dot acorn"></span><span class="dot leaf"></span><span class="dot stone"></span><span class="window-title">about.md</span></div>
+          <div class="window-body">
+            <div class="about-top">
+              <div class="avatar">SS</div>
+              <div>
+                <div class="about-name">Saksham Sharma</div>
+                <div class="about-role">Data Engineer<span class="divider-dot">·</span>Stony Brook, NY</div>
+              </div>
+            </div>
+            <p class="about-bio">
+              Computer Science student at Stony Brook University building data infrastructure that turns messy,
+              large-scale data into something people can actually use — from a 3B+ row healthcare warehouse to
+              automated Power BI reporting for energy and nonprofit teams. Comfortable across the full pipeline:
+              SQL and Python at the core, Airflow and Azure Data Factory for orchestration, and a research
+              background in applying ML (PCA, clustering) to real scientific data.
+            </p>
+            <div class="growing-tag"><span class="pulse-dot"></span>Currently growing at <strong>&nbsp;Data Management &amp; Biomedical Data Analytics Lab</strong></div>
+          </div>
+        </div>
+
+        <div class="window win-experience" id="win-experience">
+          <div class="window-header"><span class="dot acorn"></span><span class="dot leaf"></span><span class="dot stone"></span><span class="window-title">experience/</span></div>
+          <div class="window-body">
+            <div class="exp-list">
+              <div class="exp-card">
+                <div class="role-title">Data Engineering Intern</div>
+                <div class="role-org">Data Management and Biomedical Data Analytics Lab</div>
+                <div class="role-dates">May 2026 – Present</div>
+                <ul class="role-bullets">
+                  <li>Engineered an ETL pipeline ingesting 3B+ rows of Cerner Health Facts EHR data into a star-schema MySQL database (7 tables, 250 GB) with bulk-load optimization and FK integrity validation.</li>
+                  <li>Implemented ICD-9 → ICD-10 diagnosis code mapping across 268M records via JOIN/UPDATE on a 78K-row crosswalk table, enabling standardized clinical analytics.</li>
+                </ul>
+              </div>
+              <div class="exp-card">
+                <div class="role-title">Data Engineering Intern</div>
+                <div class="role-org">Relevate Power</div>
+                <div class="role-dates">Oct 2025 – May 2026</div>
+                <ul class="role-bullets">
+                  <li>Collated and wrangled river flow and pricing historical data for 25 hydropower plants, cutting processing time by 95%.</li>
+                  <li>Spearheaded an ETL pipeline using Azure Data Factory to store 10GB+ datasets for energy model training and reporting.</li>
+                  <li>Orchestrated Azure Functions with Power BI to deliver automated pricing reports, driving financial decisions.</li>
+                </ul>
+              </div>
+              <div class="exp-card">
+                <div class="role-title">Data Engineering Intern</div>
+                <div class="role-org">Stony Brook Foundation</div>
+                <div class="role-dates">Aug 2025 – May 2026</div>
+                <ul class="role-bullets">
+                  <li>Built an ELT pipeline scoring 100K+ donors on donation amount, frequency, and recency using multi-table joins and CTEs.</li>
+                  <li>Migrated performance reports from Excel to Power BI, delivering automated dashboards to 100+ employees across 10 teams.</li>
+                  <li>Developed Power BI aggregation dashboards to validate data integrity across ETL pipelines and reporting systems.</li>
+                </ul>
+              </div>
+              <div class="exp-card">
+                <div class="role-title">Research Assistant</div>
+                <div class="role-org">Brookhaven National Laboratory</div>
+                <div class="role-dates">Dec 2024 – Sept 2025</div>
+                <ul class="role-bullets">
+                  <li>Developed Python pipelines for XAFS data retrieval, preprocessing, and EDA, streamlining analysis across 50+ datasets.</li>
+                  <li>Applied PCA and K-means clustering to uncover structural and bond-length patterns, achieving 80% clustering accuracy and contributing to a research publication submission.</li>
+                </ul>
+              </div>
+              <div class="exp-card">
+                <div class="role-title">Teaching Assistant — Introduction to Data Science</div>
+                <div class="role-org">Stony Brook University</div>
+                <div class="role-dates">Aug – Dec 2025</div>
+                <ul class="role-bullets">
+                  <li>Led Machine Learning sessions with 150+ Data Science (CSE 351) students under Dr. Praveen Tripathi.</li>
+                  <li>Fostered collaborative office hours with 50+ students through peer-led review sessions.</li>
+                </ul>
+              </div>
+              <div class="exp-card">
+                <div class="role-title">Database Maintenance Intern</div>
+                <div class="role-org">Stony Brook University</div>
+                <div class="role-dates">Dec 2024 – Sept 2025</div>
+                <ul class="role-bullets">
+                  <li>Developed Python and SQL pipelines to automate data ingestion, validation, and maintenance for departmental databases.</li>
+                  <li>Built automated data quality and reconciliation workflows to ensure integrity across academic datasets.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="window win-education" id="win-education">
+          <div class="window-header"><span class="dot acorn"></span><span class="dot leaf"></span><span class="dot stone"></span><span class="window-title">education.md</span></div>
+          <div class="window-body">
+            <div class="edu-card">
+              <div class="edu-school">Stony Brook University</div>
+              <div class="edu-degree">Bachelor of Science in Computer Science</div>
+              <div class="edu-meta"><span>CGPA: 3.56</span><span>Dean's List</span><span>Expected May 2027</span></div>
+              <div class="coursework">
+                <div class="coursework-title">Relevant Coursework</div>
+                <div class="course-chips">
+                  <span class="course-chip"><span class="course-code">CSE 214</span>Data Structures</span>
+                  <span class="course-chip"><span class="course-code">CSE 351</span>Introduction to Data Science</span>
+                  <span class="course-chip"><span class="course-code">CSE 316</span>Fundamentals of Software Development</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="window win-skills" id="win-skills">
+          <div class="window-header"><span class="dot acorn"></span><span class="dot leaf"></span><span class="dot stone"></span><span class="window-title">skills.json</span></div>
+          <div class="window-body">
+            <div class="skill-list">
+              <div class="skill-card">
+                <div class="skill-group-title">Languages</div>
+                <div class="skill-chips"><span class="chip">Python (Advanced)</span><span class="chip">SQL / PostgreSQL (Advanced)</span><span class="chip">R</span><span class="chip">Java</span><span class="chip">C / C++</span></div>
+              </div>
+              <div class="skill-card">
+                <div class="skill-group-title">Data Technologies</div>
+                <div class="skill-chips"><span class="chip">MySQL</span><span class="chip">Azure Cloud</span><span class="chip">Apache Airflow</span><span class="chip">Astro</span><span class="chip">SCADA</span><span class="chip">Power BI</span><span class="chip">Power Automate</span><span class="chip">Tableau</span><span class="chip">Salesforce</span></div>
+              </div>
+              <div class="skill-card">
+                <div class="skill-group-title">Developer Tools</div>
+                <div class="skill-chips"><span class="chip">Git</span><span class="chip">Docker</span><span class="chip">tmux / screen</span><span class="chip">Jupyter Notebooks</span><span class="chip">MS Office</span></div>
+              </div>
+              <div class="skill-card">
+                <div class="skill-group-title">ML &amp; Libraries</div>
+                <div class="skill-chips"><span class="chip">pandas</span><span class="chip">NumPy</span><span class="chip">scikit-learn</span><span class="chip">Selenium</span><span class="chip">requests</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="window win-projects" id="win-projects">
+          <div class="window-header"><span class="dot acorn"></span><span class="dot leaf"></span><span class="dot stone"></span><span class="window-title">projects/</span></div>
+          <div class="window-body">
+            <div class="proj-list">
+              <div class="proj-card">
+                <div class="proj-title">Natural Language to SQL Tool</div>
+                <div class="proj-date">June 2026</div>
+                <ul class="proj-bullets">
+                  <li>Built an end-to-end NL-to-SQL pipeline in Python, batch ingesting 1M+ weather records across 10 US cities into PostgreSQL.</li>
+                  <li>Engineered a schema extraction service that auto-generates a JSON data catalog from PostgreSQL's information schema, reducing LLM hallucination.</li>
+                  <li>Deployed a Flask web interface exposing the pipeline as a REST API endpoint, translating NL queries into executed SQL.</li>
+                </ul>
+                <div class="proj-tags"><span class="tag">Python</span><span class="tag">PostgreSQL</span><span class="tag">Flask</span><span class="tag">Google Gemini</span></div>
+              </div>
+              <div class="proj-card">
+                <div class="proj-title">Olympics Data Warehouse: Medallion Architecture</div>
+                <div class="proj-date">June – July 2025</div>
+                <ul class="proj-bullets">
+                  <li>Designed a scalable medallion data architecture (bronze/silver/gold) on PostgreSQL to process 600K+ rows across 6 Olympic datasets, enabling structured, analysis-ready data for downstream modeling and reporting.</li>
+                  <li>Applied advanced SQL transformations, regex normalization across 10+ date formats, and automated validation checks to enforce 99.9% data integrity, mirroring production-grade data quality standards.</li>
+                  <li>Built 6 gold-layer analytics tables surfacing medal rankings, athlete performance leaderboards, and sport trend insights using Python; containerized with Docker and automated via Airflow DAGs, reducing manual processing by 95%.</li>
+                </ul>
+                <div class="proj-tags"><span class="tag">Python</span><span class="tag">SQL</span><span class="tag">Airflow</span><span class="tag">Docker</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="window win-contact" id="win-contact">
+          <div class="window-header"><span class="dot acorn"></span><span class="dot leaf"></span><span class="dot stone"></span><span class="window-title">contact.md</span></div>
+          <div class="window-body">
+            <div class="contact-row"><div class="contact-icon">📞</div><div><span class="contact-label">Phone</span><a href="tel:9342559302">934-255-9302</a></div></div>
+            <div class="contact-row"><div class="contact-icon">✉️</div><div><span class="contact-label">Email</span><a href="mailto:sakksham275@gmail.com">sakksham275@gmail.com</a></div></div>
+            <div class="contact-row"><div class="contact-icon">💼</div><div><span class="contact-label">LinkedIn</span><a href="https://www.linkedin.com/in/saksham-sharma275/" target="_blank" rel="noopener">linkedin.com/in/saksham-sharma275</a></div></div>
+            <div class="contact-row"><div class="contact-icon">📍</div><div><span class="contact-label">Location</span>Stony Brook, NY</div></div>
+          </div>
+        </div>
+
+        <div class="window win-resume" id="win-resume">
+          <div class="window-header"><span class="dot acorn"></span><span class="dot leaf"></span><span class="dot stone"></span><span class="window-title">resume.pdf</span></div>
+          <div class="window-body">
+            <div class="resume-icon">📄</div>
+            <div style="font-family:var(--font-display);font-weight:600;font-size:16px;">Saksham_Sharma_Resume.pdf</div>
+            <a class="resume-btn" href="#" id="resumeLink">Open Resume</a>
+            <div class="resume-note">Add a hosted link (Drive/Dropbox) here to make this live.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
   </div>
 
-  <div class="timeline-item">
-    <div class="timeline-content">
-      <div class="timeline-head">
-        <h3>Data Engineering Intern</h3>
-        <span class="timeline-date">Oct 2025 – May 2026</span>
-      </div>
-      <div class="timeline-org"><a href="https://www.relevatepower.com/careers" target="_blank" rel="noopener">Relevate Power</a></div>
-      <ul>
-        <li>Collated and wrangled river flow and pricing historical data for 25 hydropower plants, cutting processing time by 95%.</li>
-        <li>Spearheaded an ETL pipeline using Azure Data Factory to store 10GB+ datasets for energy model training and reporting.</li>
-        <li>Orchestrated Azure Functions in conjunction with Power BI to deliver automated pricing reports, driving financial decisions.</li>
-      </ul>
-    </div>
+  <div class="dock-wrap" id="dock">
+    <div class="dock-icon" data-win="about">👋<span class="tooltip">About</span></div>
+    <div class="dock-icon" data-win="experience">💼<span class="tooltip">Experience</span></div>
+    <div class="dock-icon" data-win="education">🎓<span class="tooltip">Education</span></div>
+    <div class="dock-icon" data-win="skills">🌿<span class="tooltip">Skills</span></div>
+    <div class="dock-icon" data-win="projects">📁<span class="tooltip">Projects</span></div>
+    <div class="dock-icon" data-win="contact">✉️<span class="tooltip">Contact</span></div>
+    <div class="dock-icon" data-win="resume">📄<span class="tooltip">Resume</span></div>
   </div>
 
-  <div class="timeline-item">
-    <div class="timeline-content">
-      <div class="timeline-head">
-        <h3>Data Engineering Intern</h3>
-        <span class="timeline-date">Aug 2025 – May 2026</span>
-      </div>
-      <div class="timeline-org"><a href="https://www.stonybrook.edu/advancement/" target="_blank" rel="noopener">Stony Brook Foundation</a></div>
-      <ul>
-        <li>Built ELT pipeline scoring 100K+ donors on donation amount, frequency and recency using multi-table joins and CTEs.</li>
-        <li>Migrated performance reports from Excel to Power BI, delivering automated dashboards to 100+ employees across 10 teams.</li>
-        <li>Developed Power BI aggregation dashboards to validate data integrity across ETL pipelines and business reporting systems.</li>
-      </ul>
-    </div>
-  </div>
+</div>
 
-  <div class="timeline-item">
-    <div class="timeline-content">
-      <div class="timeline-head">
-        <h3>Research Assistant</h3>
-        <span class="timeline-date">Dec 2024 – Sept 2025</span>
-      </div>
-      <div class="timeline-org"><a href="https://www.bnl.gov/world/" target="_blank" rel="noopener">Brookhaven National Laboratory</a></div>
-      <ul>
-        <li>Developed Python pipelines for XAFS data retrieval, preprocessing, and EDA, streamlining analysis across 50+ datasets.</li>
-        <li>Applied PCA and K-means clustering to uncover structural and bond-length patterns in data, achieving 80% clustering accuracy and contributing to a research publication submission.</li>
-      </ul>
-    </div>
-  </div>
+<script>
+  function updateClock(){
+    const el = document.getElementById('clock');
+    const now = new Date();
+    let h = now.getHours();
+    const m = now.getMinutes().toString().padStart(2,'0');
+    const ampm = h >= 12 ? 'PM' : 'AM';
+    h = h % 12; if(h===0) h = 12;
+    el.textContent = `${h}:${m} ${ampm}`;
+  }
+  updateClock();
+  setInterval(updateClock, 1000*30);
 
-  <div class="timeline-item">
-    <div class="timeline-content">
-      <div class="timeline-head">
-        <h3>Teaching Assistant: Introduction to Data Science</h3>
-        <span class="timeline-date">Aug – Dec 2025</span>
-      </div>
-      <div class="timeline-org"><a href="https://www.stonybrook.edu/" target="_blank" rel="noopener">Stony Brook University</a></div>
-      <ul>
-        <li>Led Machine Learning sessions with 150+ Data Science (CSE 351) students under Dr. Praveen Tripathi.</li>
-        <li>Fostered collaborative environments during office hours with 50+ students by leading successful peer-led reviews.</li>
-      </ul>
-    </div>
-  </div>
+  const desktop = document.getElementById('desktop');
+  const leafGlyphs = ['🍃','🍂'];
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!prefersReduced){
+    for(let i=0;i<7;i++){
+      const leaf = document.createElement('div');
+      leaf.className = 'leaf';
+      leaf.textContent = leafGlyphs[i % 2];
+      leaf.style.left = (Math.random()*94 + 2) + 'vw';
+      leaf.style.fontSize = (14 + Math.random()*10) + 'px';
+      leaf.style.animationDuration = (14 + Math.random()*10) + 's';
+      leaf.style.animationDelay = (Math.random()*14) + 's';
+      desktop.appendChild(leaf);
+    }
+  }
 
-  <div class="timeline-item">
-    <div class="timeline-content">
-      <div class="timeline-head">
-        <h3>Database Maintenance Intern</h3>
-        <span class="timeline-date">Dec 2024 – Sept 2025</span>
-      </div>
-      <div class="timeline-org"><a href="https://www.stonybrook.edu/" target="_blank" rel="noopener">Stony Brook University</a></div>
-      <ul>
-        <li>Developed Python and SQL pipelines to automate data ingestion, validation, and maintenance for departmental databases.</li>
-        <li>Built automated data quality and reconciliation workflows to ensure integrity across academic datasets.</li>
-      </ul>
-    </div>
-  </div>
+  const dock = document.getElementById('dock');
+  const dockIcons = Array.from(dock.querySelectorAll('.dock-icon'));
+  dock.addEventListener('mousemove', (e)=>{
+    const rect = dock.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    dockIcons.forEach(icon=>{
+      const iconRect = icon.getBoundingClientRect();
+      const iconCenter = iconRect.left + iconRect.width/2 - rect.left;
+      const dist = Math.abs(mouseX - iconCenter);
+      const maxDist = 90;
+      const scale = dist < maxDist ? 1 + (1 - dist/maxDist) * 0.55 : 1;
+      const lift = dist < maxDist ? (1 - dist/maxDist) * 10 : 0;
+      icon.style.transform = `scale(${scale}) translateY(${-lift}px)`;
+    });
+  });
+  dock.addEventListener('mouseleave', ()=>{ dockIcons.forEach(icon=> icon.style.transform = 'scale(1)'); });
 
-</section>
+  /* ---------- LEAF TAB WINDOW MANAGER ---------- */
+  const SECTION_LABELS = {
+    about:'About', experience:'Experience', education:'Education', skills:'Skills',
+    projects:'Projects', contact:'Contact', resume:'Resume'
+  };
+  const LEAF_SVG = '<svg class="tab-leaf" viewBox="0 0 24 24" fill="none"><path d="M12 2C7 2 4 6 4 10c0 5 4 9 8 12 4-3 8-7 8-12 0-4-3-8-8-8Z" fill="#9FAF95"/></svg>';
 
-<section id="education" class="alt">
-  <h2>Education</h2>
-  <div class="edu-card">
-    <div>
-      <h3>Bachelor of Science in Computer Science</h3>
-      <div class="timeline-org">Stony Brook University, Stony Brook NY</div>
-    </div>
-    <div class="edu-meta">
-      <div class="metric small">3.56</div>
-      <div class="metric-label">CGPA · Dean's List · Expected May 2027</div>
-    </div>
-  </div>
-</section>
+  let openTabs = ['about'];
+  let activeTab = 'about';
 
-<section id="skills">
-  <h2>Technical skills</h2>
-  <div class="skill-groups">
-    <div class="skill-group">
-      <h4>Languages</h4>
-      <div class="skills-row">
-        <div class="skill-pill">Python</div><div class="skill-pill">SQL / PostgreSQL</div><div class="skill-pill">R</div><div class="skill-pill">Java</div><div class="skill-pill">C / C++</div>
-      </div>
-    </div>
-    <div class="skill-group">
-      <h4>Data technologies</h4>
-      <div class="skills-row">
-        <div class="skill-pill">MySQL</div><div class="skill-pill">Azure Cloud</div><div class="skill-pill">Apache Airflow</div><div class="skill-pill">Astro</div><div class="skill-pill">SCADA</div><div class="skill-pill">Power BI</div><div class="skill-pill">Power Automate</div><div class="skill-pill">Tableau</div><div class="skill-pill">Salesforce</div>
-      </div>
-    </div>
-    <div class="skill-group">
-      <h4>Developer tools</h4>
-      <div class="skills-row">
-        <div class="skill-pill">Git</div><div class="skill-pill">Docker</div><div class="skill-pill">tmux / screen</div><div class="skill-pill">Jupyter</div><div class="skill-pill">MS Office</div>
-      </div>
-    </div>
-    <div class="skill-group">
-      <h4>Machine learning</h4>
-      <div class="skills-row">
-        <div class="skill-pill">pandas</div><div class="skill-pill">NumPy</div><div class="skill-pill">scikit-learn</div><div class="skill-pill">Selenium</div><div class="skill-pill">requests</div>
-      </div>
-    </div>
-  </div>
-</section>
+  const tabStrip = document.getElementById('tabStrip');
+  const emptyState = document.getElementById('emptyState');
 
-<section id="contact" class="alt">
-  <h2>Get in touch</h2>
-  <p class="contact-text">I'm always open to discussing data engineering roles, internships, or interesting projects involving large-scale data pipelines.</p>
-  <div class="contact-buttons">
-    <a class="btn btn-primary" href="mailto:saksham.sharma@stonybrook.edu">Email me</a>
-    <a class="btn" href="https://linkedin.com/in/saksham-sharma275" target="_blank" rel="noopener">LinkedIn</a>
-    <a class="btn" href="https://github.com/sakksham27" target="_blank" rel="noopener">GitHub</a>
-  </div>
-</section>
+  function renderTabs(){
+    tabStrip.innerHTML = '';
+    openTabs.forEach(name=>{
+      const tab = document.createElement('div');
+      tab.className = 'tab' + (name === activeTab ? ' active' : '');
+      tab.innerHTML = LEAF_SVG + '<span>' + SECTION_LABELS[name] + '</span>';
+      tab.addEventListener('click', ()=> setActive(name));
 
-<footer>
-  <p>&copy; 2026 Saksham Sharma. Built with care.</p>
-</footer>
+      const closeBtn = document.createElement('span');
+      closeBtn.className = 'tab-close';
+      closeBtn.textContent = '×';
+      closeBtn.addEventListener('click', (e)=>{ e.stopPropagation(); closeTab(name); });
+      tab.appendChild(closeBtn);
+
+      tabStrip.appendChild(tab);
+    });
+  }
+
+  function showActiveWindow(){
+    document.querySelectorAll('.window').forEach(w=>{
+      w.classList.remove('open','show');
+    });
+    if(activeTab){
+      emptyState.classList.remove('show');
+      const win = document.getElementById('win-' + activeTab);
+      if(win){
+        win.classList.add('open');
+        requestAnimationFrame(()=> win.classList.add('show'));
+      }
+    } else {
+      emptyState.classList.add('show');
+    }
+    document.querySelectorAll('.trail-item').forEach(t=> t.classList.toggle('active', t.dataset.win === activeTab));
+    document.querySelectorAll('.dock-icon').forEach(d=> d.classList.toggle('active-dot', d.dataset.win === activeTab));
+  }
+
+  function setActive(name){
+    activeTab = name;
+    renderTabs();
+    showActiveWindow();
+  }
+
+  function openWindow(name){
+    if(!openTabs.includes(name)) openTabs.push(name);
+    setActive(name);
+  }
+
+  function closeTab(name){
+    openTabs = openTabs.filter(t=> t !== name);
+    if(activeTab === name){
+      activeTab = openTabs.length ? openTabs[openTabs.length - 1] : null;
+    }
+    renderTabs();
+    showActiveWindow();
+  }
+
+  document.querySelectorAll('[data-win]').forEach(el=>{
+    el.addEventListener('click', ()=> openWindow(el.dataset.win));
+  });
+
+  // init
+  renderTabs();
+  showActiveWindow();
+</script>
 
 </body>
 </html>
