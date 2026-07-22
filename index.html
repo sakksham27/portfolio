@@ -1055,142 +1055,219 @@
   renderTabs();
   showActiveWindow();
 
-  /* ================= AI AGENT ================= */
+//   /* ================= AI AGENT ================= */
 
-  // 1) Paste your free Hugging Face token below (Settings -> Access Tokens -> New token, "Read" is enough).
-  //    Because this runs in the browser, the token is visible to anyone who views your page source.
-  //    That's fine for a low-traffic portfolio demo — just don't reuse a token you care about protecting.
-  const HF_TOKEN = "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";
+//   // 1) Paste your free Hugging Face token below (Settings -> Access Tokens -> New token, "Read" is enough).
+//   //    Because this runs in the browser, the token is visible to anyone who views your page source.
+//   //    That's fine for a low-traffic portfolio demo — just don't reuse a token you care about protecting.
+//   const HF_TOKEN = "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";
 
-  // 2) Pick any small free chat model available on Hugging Face's router.
-  //    Small/fast options that work well for a portfolio Q&A bot:
-  const HF_MODEL = "meta-llama/Llama-3.2-3B-Instruct:novita";
+//   // 2) Pick any small free chat model available on Hugging Face's router.
+//   //    Small/fast options that work well for a portfolio Q&A bot:
+//   const HF_MODEL = "meta-llama/Llama-3.2-3B-Instruct:novita";
 
-  const HF_ENDPOINT = "https://router.huggingface.co/v1/chat/completions";
+//   const HF_ENDPOINT = "https://router.huggingface.co/v1/chat/completions";
 
-  // 3) The agent's "knowledge" about Saksham — edit freely to keep it in sync with the site.
-  const SYSTEM_PROMPT = `You are a friendly, concise AI guide embedded in Saksham Sharma's portfolio website.
-Answer visitor questions about Saksham using ONLY the facts below. Keep answers short (2-4 sentences),
-warm, and conversational. If asked something not covered here, say you don't have that detail and
-suggest they check the Contact section or reach out directly.
+//   // 3) The agent's "knowledge" about Saksham — edit freely to keep it in sync with the site.
+//   const SYSTEM_PROMPT = `You are a friendly, concise AI guide embedded in Saksham Sharma's portfolio website.
+// Answer visitor questions about Saksham using ONLY the facts below. Keep answers short (2-4 sentences),
+// warm, and conversational. If asked something not covered here, say you don't have that detail and
+// suggest they check the Contact section or reach out directly.
 
-ABOUT: Saksham Sharma is a Computer Science student at Stony Brook University (CGPA 3.56, Dean's List,
-expected graduation May 2027), working as a Data Engineer. He builds data infrastructure — from a 3B+ row
-healthcare warehouse to automated Power BI reporting for energy and nonprofit teams.
+// ABOUT: Saksham Sharma is a Computer Science student at Stony Brook University (CGPA 3.56, Dean's List,
+// expected graduation May 2027), working as a Data Engineer. He builds data infrastructure — from a 3B+ row
+// healthcare warehouse to automated Power BI reporting for energy and nonprofit teams.
 
-EXPERIENCE:
-- Data Engineering Intern, Data Management and Biomedical Data Analytics Lab (May 2026-Present): built an ETL
-  pipeline ingesting 3B+ rows of Cerner Health Facts EHR data into a star-schema MySQL database (7 tables, 250GB),
-  and mapped ICD-9 to ICD-10 codes across 268M records.
-- Data Engineering Intern, Relevate Power (Oct 2025-May 2026): wrangled river flow and pricing data for 25
-  hydropower plants (cutting processing time 95%), built an Azure Data Factory ETL pipeline, and automated
-  Power BI pricing reports.
-- Data Engineering Intern, Stony Brook Foundation (Aug 2025-May 2026): built an ELT pipeline scoring 100K+
-  donors, migrated reporting from Excel to Power BI for 100+ employees across 10 teams.
-- Research Assistant, Brookhaven National Laboratory (Dec 2024-Sept 2025): built Python pipelines for XAFS
-  data analysis, applied PCA and K-means clustering (80% clustering accuracy), contributed to a research
-  publication submission.
-- Teaching Assistant, Introduction to Data Science, Stony Brook University (Aug-Dec 2025): led ML sessions for
-  150+ students under Dr. Praveen Tripathi.
-- Database Maintenance Intern, Stony Brook University (Dec 2024-Sept 2025): automated data ingestion,
-  validation, and reconciliation for departmental databases.
+// EXPERIENCE:
+// - Data Engineering Intern, Data Management and Biomedical Data Analytics Lab (May 2026-Present): built an ETL
+//   pipeline ingesting 3B+ rows of Cerner Health Facts EHR data into a star-schema MySQL database (7 tables, 250GB),
+//   and mapped ICD-9 to ICD-10 codes across 268M records.
+// - Data Engineering Intern, Relevate Power (Oct 2025-May 2026): wrangled river flow and pricing data for 25
+//   hydropower plants (cutting processing time 95%), built an Azure Data Factory ETL pipeline, and automated
+//   Power BI pricing reports.
+// - Data Engineering Intern, Stony Brook Foundation (Aug 2025-May 2026): built an ELT pipeline scoring 100K+
+//   donors, migrated reporting from Excel to Power BI for 100+ employees across 10 teams.
+// - Research Assistant, Brookhaven National Laboratory (Dec 2024-Sept 2025): built Python pipelines for XAFS
+//   data analysis, applied PCA and K-means clustering (80% clustering accuracy), contributed to a research
+//   publication submission.
+// - Teaching Assistant, Introduction to Data Science, Stony Brook University (Aug-Dec 2025): led ML sessions for
+//   150+ students under Dr. Praveen Tripathi.
+// - Database Maintenance Intern, Stony Brook University (Dec 2024-Sept 2025): automated data ingestion,
+//   validation, and reconciliation for departmental databases.
 
-EDUCATION: B.S. Computer Science, Stony Brook University, CGPA 3.56, Dean's List, expected May 2027.
-Relevant coursework: Data Structures (CSE 214), Introduction to Data Science (CSE 351), Fundamentals of
-Software Development (CSE 316).
+// EDUCATION: B.S. Computer Science, Stony Brook University, CGPA 3.56, Dean's List, expected May 2027.
+// Relevant coursework: Data Structures (CSE 214), Introduction to Data Science (CSE 351), Fundamentals of
+// Software Development (CSE 316).
 
-SKILLS: Python, SQL/PostgreSQL, R, Java, C/C++. Data tech: MySQL, Azure Cloud, Apache Airflow, Power BI,
-Power Automate, Tableau, Salesforce. Tools: Git, Docker, Jupyter. ML: pandas, NumPy, scikit-learn.
+// SKILLS: Python, SQL/PostgreSQL, R, Java, C/C++. Data tech: MySQL, Azure Cloud, Apache Airflow, Power BI,
+// Power Automate, Tableau, Salesforce. Tools: Git, Docker, Jupyter. ML: pandas, NumPy, scikit-learn.
 
-PROJECTS:
-- Natural Language to SQL Tool (June 2026): end-to-end NL-to-SQL pipeline in Python/PostgreSQL/Flask, with a
-  schema-extraction service to reduce LLM hallucination.
-- Olympics Data Warehouse (June-July 2025): medallion architecture (bronze/silver/gold) on PostgreSQL
-  processing 600K+ rows, containerized with Docker and automated with Airflow.
+// PROJECTS:
+// - Natural Language to SQL Tool (June 2026): end-to-end NL-to-SQL pipeline in Python/PostgreSQL/Flask, with a
+//   schema-extraction service to reduce LLM hallucination.
+// - Olympics Data Warehouse (June-July 2025): medallion architecture (bronze/silver/gold) on PostgreSQL
+//   processing 600K+ rows, containerized with Docker and automated with Airflow.
 
-CONTACT: sakksham275@gmail.com, 934-255-9302, linkedin.com/in/saksham-sharma275, Stony Brook, NY.`;
+// CONTACT: sakksham275@gmail.com, 934-255-9302, linkedin.com/in/saksham-sharma275, Stony Brook, NY.`;
 
-  const chatHistory = [{ role: "system", content: SYSTEM_PROMPT }];
+//   const chatHistory = [{ role: "system", content: SYSTEM_PROMPT }];
 
-  const agentFab = document.getElementById('agentFab');
-  const agentPanel = document.getElementById('agentPanel');
-  const agentClose = document.getElementById('agentClose');
-  const agentMessages = document.getElementById('agentMessages');
-  const agentInput = document.getElementById('agentInput');
-  const agentSend = document.getElementById('agentSend');
+//   const agentFab = document.getElementById('agentFab');
+//   const agentPanel = document.getElementById('agentPanel');
+//   const agentClose = document.getElementById('agentClose');
+//   const agentMessages = document.getElementById('agentMessages');
+//   const agentInput = document.getElementById('agentInput');
+//   const agentSend = document.getElementById('agentSend');
 
-  function toggleAgentPanel(){
-    agentPanel.classList.toggle('open');
-    if(agentPanel.classList.contains('open')) agentInput.focus();
+//   function toggleAgentPanel(){
+//     agentPanel.classList.toggle('open');
+//     if(agentPanel.classList.contains('open')) agentInput.focus();
+//   }
+//   agentFab.addEventListener('click', toggleAgentPanel);
+//   agentClose.addEventListener('click', toggleAgentPanel);
+
+//   function addMessage(text, sender){
+//     const msg = document.createElement('div');
+//     msg.className = 'agent-msg ' + sender;
+//     msg.textContent = text;
+//     agentMessages.appendChild(msg);
+//     agentMessages.scrollTop = agentMessages.scrollHeight;
+//     return msg;
+//   }
+
+//   function addThinkingBubble(){
+//     const msg = document.createElement('div');
+//     msg.className = 'agent-msg bot thinking';
+//     msg.innerHTML = '<span class="dot-b"></span><span class="dot-b"></span><span class="dot-b"></span>';
+//     agentMessages.appendChild(msg);
+//     agentMessages.scrollTop = agentMessages.scrollHeight;
+//     return msg;
+//   }
+
+//   async function sendAgentMessage(){
+//     const text = agentInput.value.trim();
+//     if(!text) return;
+//     agentInput.value = '';
+//     addMessage(text, 'user');
+//     chatHistory.push({ role: 'user', content: text });
+
+//     if(!HF_TOKEN || HF_TOKEN === "PASTE_YOUR_HF_TOKEN_HERE"){
+//       addMessage("🍂 The agent isn't connected yet — add a free Hugging Face token in the HF_TOKEN variable near the bottom of the page's script to activate it.", 'bot');
+//       return;
+//     }
+
+//     const thinkingBubble = addThinkingBubble();
+//     try{
+//       const response = await fetch(HF_ENDPOINT, {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//           "Authorization": "Bearer " + HF_TOKEN
+//         },
+//         body: JSON.stringify({
+//           model: HF_MODEL,
+//           messages: chatHistory,
+//           max_tokens: 300
+//         })
+//       });
+
+//       if(!response.ok){
+//         throw new Error("Request failed: " + response.status);
+//       }
+
+//       const data = await response.json();
+//       const reply = data?.choices?.[0]?.message?.content?.trim() || "Sorry, I couldn't generate a response just now.";
+//       thinkingBubble.remove();
+//       addMessage(reply, 'bot');
+//       chatHistory.push({ role: 'assistant', content: reply });
+//     }catch(err){
+//       thinkingBubble.remove();
+//       addMessage("🍂 Hmm, I couldn't reach the model just now (it may be waking up, rate-limited, or the token/model needs checking). Try again in a moment.", 'bot');
+//       console.error(err);
+//     }
+//   }
+
+//   agentSend.addEventListener('click', sendAgentMessage);
+//   agentInput.addEventListener('keydown', (e)=>{
+//     if(e.key === 'Enter') sendAgentMessage();
+//   });
+
+/* ================= AI AGENT ================= */
+
+const WORKER_URL = "https://portfolio-ai.sakksham275.workers.dev";  // ← Your worker
+
+const chatHistory = [{ 
+  role: "system", 
+  content: `You are a friendly, concise AI guide...` // (keep your existing SYSTEM_PROMPT here)
+}];
+
+const agentFab = document.getElementById('agentFab');
+const agentPanel = document.getElementById('agentPanel');
+const agentClose = document.getElementById('agentClose');
+const agentMessages = document.getElementById('agentMessages');
+const agentInput = document.getElementById('agentInput');
+const agentSend = document.getElementById('agentSend');
+
+function toggleAgentPanel(){
+  agentPanel.classList.toggle('open');
+  if(agentPanel.classList.contains('open')) agentInput.focus();
+}
+agentFab.addEventListener('click', toggleAgentPanel);
+agentClose.addEventListener('click', toggleAgentPanel);
+
+function addMessage(text, sender){
+  const msg = document.createElement('div');
+  msg.className = 'agent-msg ' + sender;
+  msg.textContent = text;
+  agentMessages.appendChild(msg);
+  agentMessages.scrollTop = agentMessages.scrollHeight;
+  return msg;
+}
+
+function addThinkingBubble(){
+  const msg = document.createElement('div');
+  msg.className = 'agent-msg bot thinking';
+  msg.innerHTML = '<span class="dot-b"></span><span class="dot-b"></span><span class="dot-b"></span>';
+  agentMessages.appendChild(msg);
+  agentMessages.scrollTop = agentMessages.scrollHeight;
+  return msg;
+}
+
+async function sendAgentMessage(){
+  const text = agentInput.value.trim();
+  if(!text) return;
+  agentInput.value = '';
+  addMessage(text, 'user');
+  chatHistory.push({ role: 'user', content: text });
+
+  const thinkingBubble = addThinkingBubble();
+
+  try{
+    const response = await fetch(`${WORKER_URL}/api/ask`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ messages: chatHistory })
+    });
+
+    if(!response.ok) throw new Error("Failed");
+
+    const data = await response.json();
+    const reply = data?.choices?.[0]?.message?.content?.trim() || "Sorry, I couldn't generate a response.";
+    
+    thinkingBubble.remove();
+    addMessage(reply, 'bot');
+    chatHistory.push({ role: 'assistant', content: reply });
+  } catch(err){
+    thinkingBubble.remove();
+    addMessage("🍂 Hmm, the AI guide is having trouble connecting right now. Try again in a moment.", 'bot');
+    console.error(err);
   }
-  agentFab.addEventListener('click', toggleAgentPanel);
-  agentClose.addEventListener('click', toggleAgentPanel);
+}
 
-  function addMessage(text, sender){
-    const msg = document.createElement('div');
-    msg.className = 'agent-msg ' + sender;
-    msg.textContent = text;
-    agentMessages.appendChild(msg);
-    agentMessages.scrollTop = agentMessages.scrollHeight;
-    return msg;
-  }
-
-  function addThinkingBubble(){
-    const msg = document.createElement('div');
-    msg.className = 'agent-msg bot thinking';
-    msg.innerHTML = '<span class="dot-b"></span><span class="dot-b"></span><span class="dot-b"></span>';
-    agentMessages.appendChild(msg);
-    agentMessages.scrollTop = agentMessages.scrollHeight;
-    return msg;
-  }
-
-  async function sendAgentMessage(){
-    const text = agentInput.value.trim();
-    if(!text) return;
-    agentInput.value = '';
-    addMessage(text, 'user');
-    chatHistory.push({ role: 'user', content: text });
-
-    if(!HF_TOKEN || HF_TOKEN === "PASTE_YOUR_HF_TOKEN_HERE"){
-      addMessage("🍂 The agent isn't connected yet — add a free Hugging Face token in the HF_TOKEN variable near the bottom of the page's script to activate it.", 'bot');
-      return;
-    }
-
-    const thinkingBubble = addThinkingBubble();
-    try{
-      const response = await fetch(HF_ENDPOINT, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer " + HF_TOKEN
-        },
-        body: JSON.stringify({
-          model: HF_MODEL,
-          messages: chatHistory,
-          max_tokens: 300
-        })
-      });
-
-      if(!response.ok){
-        throw new Error("Request failed: " + response.status);
-      }
-
-      const data = await response.json();
-      const reply = data?.choices?.[0]?.message?.content?.trim() || "Sorry, I couldn't generate a response just now.";
-      thinkingBubble.remove();
-      addMessage(reply, 'bot');
-      chatHistory.push({ role: 'assistant', content: reply });
-    }catch(err){
-      thinkingBubble.remove();
-      addMessage("🍂 Hmm, I couldn't reach the model just now (it may be waking up, rate-limited, or the token/model needs checking). Try again in a moment.", 'bot');
-      console.error(err);
-    }
-  }
-
-  agentSend.addEventListener('click', sendAgentMessage);
-  agentInput.addEventListener('keydown', (e)=>{
-    if(e.key === 'Enter') sendAgentMessage();
-  });
+agentSend.addEventListener('click', sendAgentMessage);
+agentInput.addEventListener('keydown', (e)=>{
+  if(e.key === 'Enter') sendAgentMessage();
+});
 </script>
 
 </body>
