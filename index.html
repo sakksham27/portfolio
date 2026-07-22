@@ -487,6 +487,181 @@
     .sidebar{ display:none; }
     .window{ width:94vw; height:80vh; }
   }
+
+  /* ---------- AI AGENT — floating leaf button + chat panel ---------- */
+  .agent-fab{
+    position:absolute;
+    bottom:22px;
+    right:26px;
+    z-index:40;
+    width:58px;height:58px;
+    border-radius:50%;
+    border:none;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background: radial-gradient(circle at 32% 28%, #6E8A5C, var(--moss-600) 55%, var(--forest-800) 100%);
+    box-shadow: 0 10px 22px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.18);
+    transition: transform .18s ease, box-shadow .18s ease;
+  }
+  .agent-fab:hover{ transform: translateY(-3px) scale(1.05); box-shadow: 0 14px 26px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.2); }
+  .agent-fab svg{ width:28px; height:28px; }
+  .agent-fab .fab-ring{
+    position:absolute; inset:-5px; border-radius:50%;
+    border:1.5px solid rgba(214,165,68,0.55);
+    animation: fab-pulse 2.6s ease-out infinite;
+  }
+  @keyframes fab-pulse{
+    0%{ transform:scale(0.9); opacity:0.8; }
+    70%{ transform:scale(1.25); opacity:0; }
+    100%{ opacity:0; }
+  }
+  @media (prefers-reduced-motion: reduce){ .agent-fab .fab-ring{ animation:none; display:none; } }
+  .agent-fab .fab-badge{
+    position:absolute; top:-2px; right:-2px;
+    width:14px;height:14px;border-radius:50%;
+    background:var(--amber-400);
+    border:2px solid var(--forest-900);
+  }
+
+  .agent-panel{
+    position:absolute;
+    bottom:92px;
+    right:26px;
+    z-index:41;
+    width:360px;
+    height:480px;
+    max-width:88vw;
+    max-height:70vh;
+    background:var(--parchment-100);
+    border-radius:16px;
+    border:1px solid rgba(74,56,38,0.25);
+    box-shadow: 0 24px 50px rgba(10,20,12,0.5), 0 3px 10px rgba(10,20,12,0.3);
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+    opacity:0;
+    transform:translateY(12px) scale(0.98);
+    pointer-events:none;
+    transition:opacity .18s ease, transform .18s ease;
+  }
+  .agent-panel.open{
+    opacity:1;
+    transform:translateY(0) scale(1);
+    pointer-events:auto;
+  }
+  .agent-header{
+    height:44px;
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:0 14px;
+    background:linear-gradient(180deg, var(--bark-600), var(--bark-700));
+  }
+  .agent-header-title{
+    display:flex; flex-direction:column; margin-left:4px;
+  }
+  .agent-header-title .name{ font-family:var(--font-mono); font-size:12px; color:var(--parchment-200); letter-spacing:0.3px; }
+  .agent-header-title .status{ font-family:var(--font-mono); font-size:10px; color:var(--sage-400); display:flex; align-items:center; gap:5px; }
+  .agent-header-title .status .status-dot{ width:6px;height:6px;border-radius:50%; background:var(--sage-400); }
+  .agent-close{
+    margin-left:auto;
+    width:22px;height:22px;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    color:var(--parchment-200);
+    cursor:pointer;
+    font-size:14px;
+    opacity:0.7;
+    transition:opacity .15s ease, background .15s ease;
+  }
+  .agent-close:hover{ opacity:1; background:rgba(255,255,255,0.1); }
+
+  .agent-messages{
+    flex:1;
+    overflow-y:auto;
+    padding:16px 14px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .agent-msg{
+    max-width:82%;
+    padding:9px 12px;
+    border-radius:12px;
+    font-size:13px;
+    line-height:1.55;
+  }
+  .agent-msg.bot{
+    align-self:flex-start;
+    background:var(--parchment-200);
+    color:var(--ink-900);
+    border:1px solid rgba(74,56,38,0.1);
+    border-top-left-radius:4px;
+  }
+  .agent-msg.user{
+    align-self:flex-end;
+    background:var(--moss-600);
+    color:var(--parchment-100);
+    border-top-right-radius:4px;
+  }
+  .agent-msg.thinking{
+    display:flex; align-items:center; gap:5px;
+  }
+  .agent-msg.thinking .dot-b{
+    width:5px;height:5px;border-radius:50%;
+    background:var(--bark-500);
+    animation:think-bounce 1.1s infinite ease-in-out;
+  }
+  .agent-msg.thinking .dot-b:nth-child(2){ animation-delay:0.15s; }
+  .agent-msg.thinking .dot-b:nth-child(3){ animation-delay:0.3s; }
+  @keyframes think-bounce{
+    0%,60%,100%{ transform:translateY(0); opacity:0.5; }
+    30%{ transform:translateY(-3px); opacity:1; }
+  }
+
+  .agent-input-row{
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:10px 12px;
+    border-top:1px solid rgba(74,56,38,0.12);
+    background:var(--parchment-100);
+  }
+  .agent-input{
+    flex:1;
+    border:1px solid rgba(74,56,38,0.2);
+    background:var(--parchment-200);
+    border-radius:999px;
+    padding:9px 14px;
+    font-family:var(--font-body);
+    font-size:13px;
+    color:var(--ink-900);
+    outline:none;
+  }
+  .agent-input:focus{ border-color:var(--moss-600); }
+  .agent-send{
+    flex-shrink:0;
+    width:34px;height:34px;
+    border-radius:50%;
+    border:none;
+    cursor:pointer;
+    background:var(--forest-800);
+    display:flex;align-items:center;justify-content:center;
+    transition:background .15s ease;
+  }
+  .agent-send:hover{ background:var(--moss-600); }
+  .agent-send svg{ width:15px;height:15px; }
+  .agent-messages::-webkit-scrollbar{ width:6px; }
+  .agent-messages::-webkit-scrollbar-thumb{ background:rgba(74,56,38,0.25); border-radius:3px; }
+
+  @media (max-width: 900px){
+    .agent-panel{ right:12px; bottom:88px; width:88vw; }
+    .agent-fab{ right:16px; bottom:16px; }
+  }
 </style>
 </head>
 <body>
@@ -728,6 +903,33 @@
     <div class="dock-icon" data-win="resume">📄<span class="tooltip">Resume</span></div>
   </div>
 
+  <!-- ---------- AI AGENT ---------- -->
+  <button class="agent-fab" id="agentFab" aria-label="Ask the AI agent about Saksham">
+    <span class="fab-ring"></span>
+    <span class="fab-badge"></span>
+    <svg viewBox="0 0 24 24" fill="none"><path d="M12 2C7 2 4 6 4 10c0 5 4 9 8 12 4-3 8-7 8-12 0-4-3-8-8-8Z" fill="#F7F1E1"/><path d="M12 4v18" stroke="#4A3826" stroke-width="1" opacity="0.4"/></svg>
+  </button>
+
+  <div class="agent-panel" id="agentPanel">
+    <div class="agent-header">
+      <span class="dot acorn"></span><span class="dot leaf"></span><span class="dot stone"></span>
+      <div class="agent-header-title">
+        <span class="name">ask-saksham.ai</span>
+        <span class="status"><span class="status-dot"></span>trail guide</span>
+      </div>
+      <div class="agent-close" id="agentClose">×</div>
+    </div>
+    <div class="agent-messages" id="agentMessages">
+      <div class="agent-msg bot">🍃 Hi! I'm an AI trail guide for Saksham's portfolio. Ask me about his experience, projects, or skills.</div>
+    </div>
+    <div class="agent-input-row">
+      <input type="text" class="agent-input" id="agentInput" placeholder="Ask about Saksham's work..." autocomplete="off">
+      <button class="agent-send" id="agentSend" aria-label="Send">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#F7F1E1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7Z"/></svg>
+      </button>
+    </div>
+  </div>
+
 </div>
 
 <script>
@@ -852,6 +1054,143 @@
   // init
   renderTabs();
   showActiveWindow();
+
+  /* ================= AI AGENT ================= */
+
+  // 1) Paste your free Hugging Face token below (Settings -> Access Tokens -> New token, "Read" is enough).
+  //    Because this runs in the browser, the token is visible to anyone who views your page source.
+  //    That's fine for a low-traffic portfolio demo — just don't reuse a token you care about protecting.
+  const HF_TOKEN = "PASTE_YOUR_HF_TOKEN_HERE";
+
+  // 2) Pick any small free chat model available on Hugging Face's router.
+  //    Small/fast options that work well for a portfolio Q&A bot:
+  const HF_MODEL = "meta-llama/Llama-3.2-3B-Instruct:novita";
+
+  const HF_ENDPOINT = "https://router.huggingface.co/v1/chat/completions";
+
+  // 3) The agent's "knowledge" about Saksham — edit freely to keep it in sync with the site.
+  const SYSTEM_PROMPT = `You are a friendly, concise AI guide embedded in Saksham Sharma's portfolio website.
+Answer visitor questions about Saksham using ONLY the facts below. Keep answers short (2-4 sentences),
+warm, and conversational. If asked something not covered here, say you don't have that detail and
+suggest they check the Contact section or reach out directly.
+
+ABOUT: Saksham Sharma is a Computer Science student at Stony Brook University (CGPA 3.56, Dean's List,
+expected graduation May 2027), working as a Data Engineer. He builds data infrastructure — from a 3B+ row
+healthcare warehouse to automated Power BI reporting for energy and nonprofit teams.
+
+EXPERIENCE:
+- Data Engineering Intern, Data Management and Biomedical Data Analytics Lab (May 2026-Present): built an ETL
+  pipeline ingesting 3B+ rows of Cerner Health Facts EHR data into a star-schema MySQL database (7 tables, 250GB),
+  and mapped ICD-9 to ICD-10 codes across 268M records.
+- Data Engineering Intern, Relevate Power (Oct 2025-May 2026): wrangled river flow and pricing data for 25
+  hydropower plants (cutting processing time 95%), built an Azure Data Factory ETL pipeline, and automated
+  Power BI pricing reports.
+- Data Engineering Intern, Stony Brook Foundation (Aug 2025-May 2026): built an ELT pipeline scoring 100K+
+  donors, migrated reporting from Excel to Power BI for 100+ employees across 10 teams.
+- Research Assistant, Brookhaven National Laboratory (Dec 2024-Sept 2025): built Python pipelines for XAFS
+  data analysis, applied PCA and K-means clustering (80% clustering accuracy), contributed to a research
+  publication submission.
+- Teaching Assistant, Introduction to Data Science, Stony Brook University (Aug-Dec 2025): led ML sessions for
+  150+ students under Dr. Praveen Tripathi.
+- Database Maintenance Intern, Stony Brook University (Dec 2024-Sept 2025): automated data ingestion,
+  validation, and reconciliation for departmental databases.
+
+EDUCATION: B.S. Computer Science, Stony Brook University, CGPA 3.56, Dean's List, expected May 2027.
+Relevant coursework: Data Structures (CSE 214), Introduction to Data Science (CSE 351), Fundamentals of
+Software Development (CSE 316).
+
+SKILLS: Python, SQL/PostgreSQL, R, Java, C/C++. Data tech: MySQL, Azure Cloud, Apache Airflow, Power BI,
+Power Automate, Tableau, Salesforce. Tools: Git, Docker, Jupyter. ML: pandas, NumPy, scikit-learn.
+
+PROJECTS:
+- Natural Language to SQL Tool (June 2026): end-to-end NL-to-SQL pipeline in Python/PostgreSQL/Flask, with a
+  schema-extraction service to reduce LLM hallucination.
+- Olympics Data Warehouse (June-July 2025): medallion architecture (bronze/silver/gold) on PostgreSQL
+  processing 600K+ rows, containerized with Docker and automated with Airflow.
+
+CONTACT: sakksham275@gmail.com, 934-255-9302, linkedin.com/in/saksham-sharma275, Stony Brook, NY.`;
+
+  const chatHistory = [{ role: "system", content: SYSTEM_PROMPT }];
+
+  const agentFab = document.getElementById('agentFab');
+  const agentPanel = document.getElementById('agentPanel');
+  const agentClose = document.getElementById('agentClose');
+  const agentMessages = document.getElementById('agentMessages');
+  const agentInput = document.getElementById('agentInput');
+  const agentSend = document.getElementById('agentSend');
+
+  function toggleAgentPanel(){
+    agentPanel.classList.toggle('open');
+    if(agentPanel.classList.contains('open')) agentInput.focus();
+  }
+  agentFab.addEventListener('click', toggleAgentPanel);
+  agentClose.addEventListener('click', toggleAgentPanel);
+
+  function addMessage(text, sender){
+    const msg = document.createElement('div');
+    msg.className = 'agent-msg ' + sender;
+    msg.textContent = text;
+    agentMessages.appendChild(msg);
+    agentMessages.scrollTop = agentMessages.scrollHeight;
+    return msg;
+  }
+
+  function addThinkingBubble(){
+    const msg = document.createElement('div');
+    msg.className = 'agent-msg bot thinking';
+    msg.innerHTML = '<span class="dot-b"></span><span class="dot-b"></span><span class="dot-b"></span>';
+    agentMessages.appendChild(msg);
+    agentMessages.scrollTop = agentMessages.scrollHeight;
+    return msg;
+  }
+
+  async function sendAgentMessage(){
+    const text = agentInput.value.trim();
+    if(!text) return;
+    agentInput.value = '';
+    addMessage(text, 'user');
+    chatHistory.push({ role: 'user', content: text });
+
+    if(!HF_TOKEN || HF_TOKEN === "PASTE_YOUR_HF_TOKEN_HERE"){
+      addMessage("🍂 The agent isn't connected yet — add a free Hugging Face token in the HF_TOKEN variable near the bottom of the page's script to activate it.", 'bot');
+      return;
+    }
+
+    const thinkingBubble = addThinkingBubble();
+    try{
+      const response = await fetch(HF_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + HF_TOKEN
+        },
+        body: JSON.stringify({
+          model: HF_MODEL,
+          messages: chatHistory,
+          max_tokens: 300
+        })
+      });
+
+      if(!response.ok){
+        throw new Error("Request failed: " + response.status);
+      }
+
+      const data = await response.json();
+      const reply = data?.choices?.[0]?.message?.content?.trim() || "Sorry, I couldn't generate a response just now.";
+      thinkingBubble.remove();
+      addMessage(reply, 'bot');
+      chatHistory.push({ role: 'assistant', content: reply });
+    }catch(err){
+      thinkingBubble.remove();
+      addMessage("🍂 Hmm, I couldn't reach the model just now (it may be waking up, rate-limited, or the token/model needs checking). Try again in a moment.", 'bot');
+      console.error(err);
+    }
+  }
+
+  agentSend.addEventListener('click', sendAgentMessage);
+  agentInput.addEventListener('keydown', (e)=>{
+    if(e.key === 'Enter') sendAgentMessage();
+  });
 </script>
 
 </body>
